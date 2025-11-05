@@ -1,8 +1,9 @@
 ---
-title: "Hello World"
-description: "Welcome to my blog! This is my first post."
+title: "How Firebase Authentication works?"
+description: ""
 date: 2024-03-21
 tags: ["welcome", "first-post"]
+image: "/images/posts/firebase_authentication/firebase_showcase.png"
 ---
 
 Hello everyone! This is my first blog post. I'm excited to share my thoughts and experiences with you.
@@ -22,7 +23,7 @@ function greet(name) {
   return `Hello, ${name}!`;
 }
 
-console.log(greet('World'));
+console.log(greet("World"));
 ```
 
 Stay tuned for more content!

@@ -4,7 +4,7 @@ export interface SiteConfig {
   title: string;
   slogan: string;
   description?: string;
-  site: string,
+  site: string;
   social: {
     github?: string;
     linkedin?: string;
@@ -17,18 +17,19 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  site: "https://example.com/", // your site url
-  title: "Your's blog",
-  slogan: "Exploring the World with Code",
-  description: "write a description here",
+  site: "https://gabrielh-muniz.netlify.app/", // your site url
+  title: "Gabriel Muniz",
+  slogan: "Everything that resides in my brain.",
+  description:
+    "A blog about programming, technology, and other random thoughts.",
   social: {
-    github: "https://github.com/larry-xue/astro-zen-blog", // leave empty if you don't want to show the github
-    linkedin: "https://www.linkedin.com/in/someone/", // leave empty if you don't want to show the linkedin
-    email: "example@gmail.com", // leave empty if you don't want to show the email
+    github: "https://github.com/gabrielh-muniz", // leave empty if you don't want to show the github
+    linkedin: "https://www.linkedin.com/in/gabriel-muniz-494349315", // leave empty if you don't want to show the linkedin
+    email: "", // leave empty if you don't want to show the email
     rss: true, // set this to false if you don't want to provide an rss feed
   },
   homepage: {
-    maxPosts: 5,
+    maxPosts: 3,
     tags: [],
     excludeTags: [],
   },
