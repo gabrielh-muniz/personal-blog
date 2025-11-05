@@ -29,9 +29,11 @@ export default {
             maxWidth: "65ch",
             color: "rgb(31, 41, 55)",
             lineHeight: "1.75",
+            textAlign: "justify",
             "h1, h2, h3, h4": {
               color: "rgb(17, 24, 39)",
               fontWeight: "700",
+              textAlign: "left",
             },
             a: {
               color: "rgb(37, 99, 235)",
@@ -40,11 +42,17 @@ export default {
               },
             },
             code: {
-              color: "rgb(31, 41, 55)",
-              backgroundColor: "rgb(243, 244, 246)",
+              color: "rgb(0, 0, 0)",
+              backgroundColor: "rgb(254, 242, 242)",
               padding: "0.2em 0.4em",
               borderRadius: "0.25rem",
-              fontWeight: "400",
+              fontWeight: "500",
+            },
+            "code::before": {
+              content: '""', // Remove backticks
+            },
+            "code::after": {
+              content: '""', // Remove backticks
             },
           },
         },
@@ -61,8 +69,8 @@ export default {
               },
             },
             code: {
-              color: "rgb(243, 244, 246)",
-              backgroundColor: "rgb(31, 41, 55)",
+              color: "rgb(255, 255, 255)",
+              backgroundColor: "rgb(36, 41, 46)",
             },
             blockquote: {
               color: "rgb(229, 231, 235)",

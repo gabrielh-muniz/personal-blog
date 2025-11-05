@@ -47,6 +47,8 @@ const imageHeight = 400; // Set appropriate default height
       <PostDate date={date} />
     </div>
   </header>
-  <p class="text-gray-800 dark:text-gray-200 mb-4">{description}</p>
+  <p class="text-gray-800 dark:text-gray-200 mb-4 text-justify">
+    {description}
+  </p>
   {tags && <PostTags tags={tags} />}
 </article>
