@@ -7,6 +7,9 @@ import sitemap from "@astrojs/sitemap";
 
 import react from "@astrojs/react";
 
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+
 export default defineConfig({
   site: siteConfig.site,
   integrations: [tailwind(), sitemap(), react()],
@@ -24,5 +27,7 @@ export default defineConfig({
         },
       ],
     ],
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
   },
 });
