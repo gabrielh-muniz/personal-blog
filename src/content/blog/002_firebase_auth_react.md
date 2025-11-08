@@ -1,12 +1,12 @@
 ---
 title: "Building a secure, practical authentication system with Firebase Auth and React"
 description: "This post presents a deep, end-to-end design and implementation exploration of an authentication system built with React (client), Firebase Authentication (identity service), Zustand (client state), TailwindCSS and Zod (input/schema validation)."
-date: 2025-11-05
+date: 2025-11-07
 tags: ["firebase", "authentication", "react", "zustand"]
 image: "/images/posts/firebase_auth_react/firebase_auth_react_showcase.png"
 ---
 
-Beyond a how-to, this article explains the formal models and trade-offs behind each choice: token lifecycles, trust boundaries, storage models, and UX vs. security trade-offs. We tie protocol-level concepts (JWT/OIDC semantics, refresh token models) to concrete engineering patterns (automatic token refresh, secure storage, session cookie vs. SPA flows) and show sample code and architecture diagrams enabling researchers and advanced developers to reason about correctness, performance, and security. If you are a student who wants to know how to integrate the following system in your application, you're going to enjoy!
+Beyond a how-to, this article explains the formal models and trade-offs behind each choice: token life cycles, trust boundaries, storage models, and UX vs. security trade-offs. We tie protocol-level concepts (JWT/OIDC semantics, refresh token models) to concrete engineering patterns (automatic token refresh, secure storage, session cookie vs. SPA flows) and show sample code and architecture diagrams enabling researchers and advanced developers to reason about correctness, performance, and security. If you are a student who wants to know how to integrate the following system in your application, you're going to enjoy!
 
 # Introduction
 
@@ -24,7 +24,7 @@ Before jumping into code, we need formal models and protocol primitives that wil
 - OAuth2 / OpenID Connect (OIDC): high-level flows for delegated authorization and identity. OIDC gives us ID tokens (identity claims, often as JWTs) and access tokens; OAuth2 introduces refresh tokens for renewed access without re-prompting the user. Firebase Auth implements an OIDC-like flow (short-lived ID tokens + refresh tokens).
 - Threat model: we assume adversaries may capture network messages, XSS in the client, compromised devices, or interceptor servers. We assume TLS for transport. Our design seeks to minimize sensitive token exposure and reduce attack windows (short token TTLs, revocation mechanisms).
 
-If you want to know more about the above topic, check our privious post about how [Firebase Authentication works under the hood](https://gabrielh-blog.netlify.app/blog/firebase_authentication/).
+If you want to know more about the above topic, check our previous post about how [Firebase Authentication works under the hood](https://gabrielh-blog.netlify.app/blog/firebase_authentication/).
 
 ## State models
 
@@ -51,7 +51,7 @@ Below are the architecture and sequence diagram we will build towards:
 
 This workflow is fairly easy to implement as well to setup everything. Keep in mind that the "problem" is to implement the state management. For this, Zustand plays an important part on the system. It keeps easy to track the user authentication flow.
 
-Another concern you may ask, is security. Almost everything Firebase manages to us. But, if you want tweak the flow you have to analyse the trus boundaries and storage. On the client, the Id token should be stored in memory (never localStorage). Why? LocalStorage is vulnerable to XSS.
+Another concern you may ask, is security. Almost everything Firebase manages to us. But, if you want tweak the flow you have to analyze the true boundaries and storage. On the client, the Id token should be stored in memory (never localStorage). Why? LocalStorage is vulnerable to XSS.
 
 # Implementation
 
@@ -75,7 +75,7 @@ docker-compose.yml
 
 ## 2. Firebase initialization
 
-Firebase offers a simple way to connect your app with firebase authentication. Go to your project on firebase console and get your credentials. The goal of this post is to show the system. If you don't know how to get your credentials, I'd recommend whatching a video.
+Firebase offers a simple way to connect your app with firebase authentication. Go to your project on firebase console and get your credentials. The goal of this post is to show the system. If you don't know how to get your credentials, I'd recommend watching a video.
 
 ```js
 // firebase.js
@@ -165,7 +165,7 @@ function useLogicForm(schema, defaultValues = {}, onSubmit, formOptions = {}) {
 }
 
 /**
- * Pre-configured hook for commomn forms
+ * Pre-configured hook for common forms
  */
 function useSignupForm(onSubmit) {
   return useLogicForm(
@@ -182,9 +182,9 @@ function useLoginForm(onSubmit) {
 export { useSignupForm, useLoginForm };
 ```
 
-This snippet is a reusable form-handling utility built with React Hook Form and Zod. It defines validation schemas for signup, login and possible other validations. It wraps RHF with a helper `useLoginForm` that wires Zod validation (via `zodResolver`) and returns the usual from helpers. Finally, it exports two specific hooks: `useSignupForm` and `useLoginForm`, pre-configured with the right schema and default values. Keep in mind that is totally scalabe for other helpers.
+This snippet is a reusable form-handling utility built with React Hook Form and Zod. It defines validation schemas for signup, login and possible other validations. It wraps RHF with a helper `useLoginForm` that wires Zod validation (via `zodResolver`) and returns the usual from helpers. Finally, it exports two specific hooks: `useSignupForm` and `useLoginForm`, pre-configured with the right schema and default values. Keep in mind that is totally scalable for other helpers.
 
-The vantages of this is clearly: centralizes validation rules so you don't repeat them in every component. With this, the component code keeps small. Also, it ensures consistent validation messages and behaviour across the app.
+The vantages of this is clearly: centralizes validation rules so you don't repeat them in every component. With this, the component code keeps small. Also, it ensures consistent validation messages and behavior across the app.
 
 I'm not a senior developer, but I made a test asking ChatGPT what are the improvements that it would made. Here's the answer: avoid re-creating the submit wrapper on every render: wrap `wrappedOnSubmit` in `useCallback`. Feel free to test this out.
 
@@ -302,7 +302,7 @@ Key parts, simply:
 
 - `defaultStates`: the initial shape of the store. Important flags relevant to the application in the authentication process.
 - `create((set) => ({}))`: creates the Zustand store exposing state and actions:
-  - `setUser(user)`: called when Firebase reposts the current user. It updates the store and flags.
+  - `setUser(user)`: called when Firebase reports the current user. It updates the store and flags.
   - `clearError()`: clear error messages.
   - `signOut()`: calls Firebase's signOut function via the small `to` helper (which returns `[error, result]`). If `signOut` fails to updates the error flag; if successful it returns [null, true].
   - `signUp(email, password, displayName)`: creates a user with Firebase, optionally updates their `displayName`, updates loading/error flags and returns the tuple.
@@ -310,7 +310,7 @@ Key parts, simply:
 
 It's useful because it's the central single source of truth for auth state. Any component can read the current user or call signOut/signUp without wiring callbacks through the tree. It also keeps UI reactive. Even better, using Firebase's listener ensures the store reflects the true auth state.
 
-Zustand generally offers better performance compared to the React Context API, especiallly in larger applications or scenarios with frequent state updates. Also, for me, it's less confusing.
+Zustand generally offers better performance compared to the React Context API, especially in larger applications or scenarios with frequent state updates. Also, for me, it's less confusing.
 
 ## 5. Signup form
 
@@ -322,7 +322,7 @@ import useAuthStore from "@/store/auth.js";
 function SignupPage() {
   const { signUp, isLoading, error } = useAuthStore();
 
-  const { register, handleSubmit, erros } = useSignupForm(async (data) => {
+  const { register, handleSubmit, errors } = useSignupForm(async (data) => {
     const [err, user] = await signUp(data.email, data.password, data.username);
     if (!err && user) {
       // do something
@@ -348,7 +348,7 @@ function SignupPage() {
 export default SignupPage;
 ```
 
-This snippet defines a React component for the signup form. It uses two custom hooks (seen previously): `useSIgnupForm` and `useAuthStore`. When the form is submitted, it calls the `signUp` function with the entered email, password, and username. If signup is successful, you can add extra logic (like redirecting the user). The form disables the submit button and shows a loading message while the signup is in progress.
+This snippet defines a React component for the signup form. It uses two custom hooks (seen previously): `useSignupForm` and `useAuthStore`. When the form is submitted, it calls the `signUp` function with the entered email, password, and username. If signup is successful, you can add extra logic (like redirecting the user). The form disables the submit button and shows a loading message while the signup is in progress.
 
 This component gives you a ready-to-use, validated signup form that connects directly to your authentication logic and shows loading feedback to the user. Feel free to modify it, adding animations, tailwind classes, shadcn components.
 
@@ -423,7 +423,7 @@ export { fetchWithAuth };
 This helper provides a function for making authenticated request from the React app to the backend server.
 
 - `getIdToken()` gets the current user's Firebase ID token (a JWT). This token proves the user is authenticated and can be verified by the backend.
-- `fetchWithAuth(endpoint, options)` is a wrapper around the standard `fetch` function. It automatically attaches the user's ID token as a Bearer toekn in the `Authorization` header, so the backend can verify the request is from an authenticated user.
+- `fetchWithAuth(endpoint, options)` is a wrapper around the standard `fetch` function. It automatically attaches the user's ID token as a Bearer token in the `Authorization` header, so the backend can verify the request is from an authenticated user.
 
 Whenever the frontend needs to talk with the backend (e.g. to fetch user data or save something), you want to make sure only authenticated users can do so. This helper ensures every request includes the user's ID token, so your backend can check if the request is allowed.
 
@@ -459,7 +459,7 @@ This is an express middleware function that protects backend API routes by verif
 
 - It checks the `Authorization` header for a Bearer token.
 - If the token is missing, it responds with a 401 Unauthorized error.
-- If a token is present, it uses Firebase Admin SDS's `verifyIdToken` to ckeck the tokens's validity (signature, expiry, issuer, etc).
+- If a token is present, it uses Firebase Admin SDS's `verifyIdToken` to check the tokens's validity (signature, expiry, issuer, etc).
 - If the token is valid, it attaches the decoded user info to `req.user` and called `next()` to continue processing the request.
 - If the token is invalid, it responds with a 401 error.
 
