@@ -3,6 +3,7 @@ import BaseLayout from "./BaseLayout.astro";
 import PostDate from "../components/PostDate.astro";
 import PostTags from "../components/PostTags.astro";
 import type { CollectionEntry } from "astro:content";
+import Comments from "../components/Comments.astro";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -51,4 +52,7 @@ const { title, date, tags, image } = post.data;
       <slot />
     </div>
   </article>
+  <section class="max-w-3xl mx-auto mt-14">
+    <Comments inline />
+  </section>
 </BaseLayout>

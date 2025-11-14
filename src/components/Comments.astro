@@ -1,0 +1,44 @@
+---
+/**
+ * Giscus doesn't reload when navigating between pages.
+ * Solution: Force Giscus to reload on each page navigation by removing and re-adding the script.
+ */
+const currentUrl = Astro.url.pathname;
+---
+
+<div id="giscus-container"></div>
+
+<script define:vars={{ currentUrl }}>
+  function loadGiscus() {
+    const container = document.getElementById("giscus-container");
+    if (!container) return;
+
+    // Remove existing Giscus iframe if present
+    container.innerHTML = "";
+
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.setAttribute("data-repo", "gabrielh-muniz/personal-blog");
+    script.setAttribute("data-repo-id", "R_kgDOQP8NhQ");
+    script.setAttribute("data-category", "Comments");
+    script.setAttribute("data-category-id", "DIC_kwDOQP8Nhc4CxyjY");
+    script.setAttribute("data-mapping", "url");
+    script.setAttribute("data-strict", "0");
+    script.setAttribute("data-reactions-enabled", "1");
+    script.setAttribute("data-emit-metadata", "0");
+    script.setAttribute("data-input-position", "top");
+    script.setAttribute("data-theme", "transparent_dark");
+    script.setAttribute("data-lang", "en");
+    script.setAttribute("data-loading", "lazy");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    container.appendChild(script);
+  }
+
+  // Load on initial page load
+  loadGiscus();
+
+  // Reload on navigation (Astro's view transitions)
+  document.addEventListener("astro:page-load", loadGiscus);
+</script>
