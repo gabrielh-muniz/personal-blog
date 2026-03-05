@@ -1,5 +1,6 @@
 ---
-title: "In Lua, metatables are special tables used to modify the behavior or other tables. By attaching a metatable to a standard table, you can define how it reacts to specific events, such as being added, compared, or indexed for missing keys."
+title: "Lua metatables"
+description: "In Lua, metatables are special tables used to modify the behavior or other tables. By attaching a metatable to a standard table, you can define how it reacts to specific events, such as being added, compared, or indexed for missing keys."
 date: 2026-02-28
 tags: ["Lua", "metatables", "objects", "OOP"]
 image: "/images/posts/lua_metatables/lua_metatables.png"
