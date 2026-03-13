@@ -286,7 +286,7 @@ At a deeper level, the framework demonstrates how a simple computational model -
 
 Understanding these internal mechanisms transforms Love2d from a simple graphics framework int a laboratory for systems experimentation. In the next article of this series, we will begin constructing the architecture of our Asteroids game, translating these conceptual foundations into concrete design decisions about state management, entity representation, and simulation structure.
 
-## References
+### References
 
 - Love2d official [documentation](https://love2d.org/wiki/Main_Page)
 - Gregory, Jason. _Game Engine Architecture_
